@@ -4,8 +4,9 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import SignIn from './components/Signin';
 import SignUp from './components/SignUp';
 interface IAuth {
-  visibleScreen: 'AUTH' | 'BOOK';
-  setVisibleScreen: React.Dispatch<React.SetStateAction<'AUTH' | 'BOOK'>>;
+  // visibleScreen: 'AUTH' | 'BOOK';
+  // setVisibleScreen: React.Dispatch<React.SetStateAction<'AUTH' | 'BOOK'>>;
+  setToken: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Auth = (props: IAuth) => {
@@ -22,6 +23,7 @@ const Auth = (props: IAuth) => {
           <SignIn
             showAuthScreen={showAuthScreen}
             setAuthScreen={setAuthScreen}
+            setToken={props.setToken}
           />
         ) : (
           <SignUp

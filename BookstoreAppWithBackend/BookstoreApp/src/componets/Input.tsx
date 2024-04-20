@@ -1,11 +1,20 @@
-import * as React from 'react';
-import {Text, View, StyleSheet, TextInput, useColorScheme} from 'react-native';
+import React from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  useColorScheme,
+  KeyboardType,
+} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 interface InputProps {
   label: string;
   value: string;
+  placeholder: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
+  keyboardType: KeyboardType;
 }
 
 const Input = (props: InputProps) => {
@@ -17,7 +26,8 @@ const Input = (props: InputProps) => {
       </Text>
       <TextInput
         style={isDarkMode ? styles.darkInput : styles.lightInput}
-        placeholder="Input"
+        keyboardType={props.keyboardType}
+        placeholder={props.placeholder}
         placeholderTextColor={Colors.primary}
         value={props.value}
         onChangeText={props.setValue}

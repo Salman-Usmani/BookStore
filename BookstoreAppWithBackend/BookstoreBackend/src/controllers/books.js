@@ -19,7 +19,7 @@ export const createBook = async (req, res) => {
     res.status(201).send({
       success: true,
       message: "book created successfully",
-      data: book,
+      books: book,
     });
   } catch (error) {
     return res.send(error);
@@ -56,18 +56,31 @@ export const updateBook = async (req, res) => {
         message: "fields required: title, author, publishYear",
       });
     }
+
     const { id } = req.params;
-    const book = await Book.findByIdAndUpdate(id, req.body);
+
+    // Find the existing book and update it atomically
+    const updatedBook = await Book.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+
+    if (!updatedBook) {
+      return res.status(404).send({
+        success: false,
+        message: "Book not found",
+      });
+    }
 
     return res.status(200).send({
       success: true,
-      message: "book updated successfully",
-      books: book,
+      message: "Book updated successfully",
+      books: updatedBook, // Return the updated book object
     });
   } catch (error) {
-    return res.send(error);
+    return res.send(error.message);
   }
 };
+
 export const deleteBook = async (req, res) => {
   try {
     const { id } = req.params;
